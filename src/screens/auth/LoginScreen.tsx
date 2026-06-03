@@ -66,6 +66,10 @@ export const LoginScreen: React.FC = () => {
               autoCapitalize="none"
               autoCorrect={false}
               secureTextEntry={!showKey}
+              returnKeyType="go"
+              onSubmitEditing={() => {
+                if (apiKey.trim() && !loading) void onSubmit();
+              }}
             />
             <TouchableOpacity onPress={() => setShowKey(!showKey)} style={styles.eyeBtn}>
               <MaterialCommunityIcons

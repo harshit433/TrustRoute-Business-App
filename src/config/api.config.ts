@@ -1,13 +1,22 @@
 /**
- * Business API — separate service from consumer API (port 3002 in dev).
- * Local: set BUSINESS_API_PORT = 3002 and BUSINESS_API_HTTPS = false, host 10.0.2.2 (emulator) or LAN IP.
+ * Business API — same routes as backend/business-api, served on the consumer API in production.
+ *
+ * Local USB device (business-api on :3002):
+ *   adb reverse tcp:3002 tcp:3002
+ *   Set LOCAL_BUSINESS_API = true
+ *
+ * Android emulator: LOCAL_BUSINESS_API + host 10.0.2.2 (see api.config.example.ts)
  */
-/** USB device: adb reverse tcp:3002 tcp:3002 → use localhost */
-export const BUSINESS_API_HOST = 'localhost';
-export const BUSINESS_API_PORT: number = 3002;
-export const BUSINESS_API_HTTPS = false;
+import { Platform } from 'react-native';
 
-// Production (uncomment when business-api is deployed):
-// export const BUSINESS_API_HOST = 'your-business-api.up.railway.app';
-// export const BUSINESS_API_PORT = 443;
-// export const BUSINESS_API_HTTPS = true;
+/** Same Railway host as mobile / business-dashboard (consumer API + business routes). */
+const PROD_HOST = 'hospitable-passion-production-fb2f.up.railway.app';
+
+/** Flip to true only when running backend business-api locally with adb reverse. */
+export const LOCAL_BUSINESS_API = false;
+
+const localHost = Platform.OS === 'android' ? '10.0.2.2' : 'localhost';
+
+export const BUSINESS_API_HOST = LOCAL_BUSINESS_API ? localHost : PROD_HOST;
+export const BUSINESS_API_PORT: number = LOCAL_BUSINESS_API ? 3002 : 443;
+export const BUSINESS_API_HTTPS = !LOCAL_BUSINESS_API;

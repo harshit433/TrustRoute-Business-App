@@ -28,7 +28,7 @@ export const BUSINESS_API_HTTPS = false;
 // export const BUSINESS_API_HOST = '192.168.1.x';
 ```
 
-Production: point `BUSINESS_API_HOST` / port at your deployed `business-api` service (Railway, etc.).
+Production: `api.config.ts` defaults to the same Railway host as the consumer API (`LOCAL_BUSINESS_API = false`). Business routes (`/me`, `/channels`, …) are mounted on that API after deploy.
 
 ## QR format (customer phone)
 

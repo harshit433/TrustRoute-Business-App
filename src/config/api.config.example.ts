@@ -8,11 +8,10 @@
  * Android emulator:
  *   BUSINESS_API_HOST = '10.0.2.2'
  *
- * Production (when business-api is deployed):
- *   BUSINESS_API_HOST = 'hospitable-passion-production-fb2f.up.railway.app'
- *   BUSINESS_API_PORT = 443
- *   BUSINESS_API_HTTPS = true
+ * Production (default in api.config.ts — business routes on consumer API):
+ *   LOCAL_BUSINESS_API = false
  */
-export const BUSINESS_API_HOST = 'localhost';
-export const BUSINESS_API_PORT: number = 3002;
-export const BUSINESS_API_HTTPS = false;
+export const LOCAL_BUSINESS_API = false;
+export const BUSINESS_API_HOST = 'hospitable-passion-production-fb2f.up.railway.app';
+export const BUSINESS_API_PORT = 443;
+export const BUSINESS_API_HTTPS = true;
