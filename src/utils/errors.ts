@@ -17,6 +17,9 @@ export function getUserFacingError(err: unknown, fallback: string): string {
   if (axios.isAxiosError(err)) {
     const body = err.response?.data as { error?: { message?: string } } | undefined;
     const msg = body?.error?.message;
+    if (typeof msg === 'string' && /access token/i.test(msg)) {
+      return 'Server routed this request to the wrong API. Redeploy the latest consumer API (business route fix).';
+    }
     if (typeof msg === 'string' && msg.length > 0) return msg;
     if (err.response?.status === 401) return 'Invalid API key or business not verified.';
     if (err.response?.status === 429) return 'Rate limit exceeded. Wait a minute and try again.';
