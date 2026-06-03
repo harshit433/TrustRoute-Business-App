@@ -184,7 +184,11 @@ export const ScannerScreen: React.FC = () => {
           <MaterialCommunityIcons name="flashlight" size={18} color={colors.textSecondary} />
           <Text style={styles.torchLabel}>{torchOn ? 'Light on' : 'Light off'}</Text>
         </TouchableOpacity>
-        <Text style={styles.hint}>Customer opens TrustRoute → Business QR (refreshes every 60s)</Text>
+        <Text style={styles.hint}>
+          Customer opens{' '}
+          <Text style={styles.hintTrust}>Trust</Text>
+          <Text style={styles.hintRoute}>Route</Text> → Business QR (refreshes every 60s)
+        </Text>
       </View>
     </SafeAreaView>
   );
@@ -243,6 +247,8 @@ const createStyles = (c: ColorScheme) =>
     },
     torchLabel: { fontSize: 13, color: c.textSecondary, fontWeight: '600' },
     hint: { fontSize: 12, color: c.textMuted, textAlign: 'center', paddingHorizontal: Spacing.lg },
+    hintTrust: { fontWeight: '800', color: c.textPrimary },
+    hintRoute: { fontWeight: '800', color: c.primary },
     resultWrap: { flex: 1, padding: Spacing.xl, alignItems: 'center', justifyContent: 'center' },
     resultIcon: {
       width: 96,

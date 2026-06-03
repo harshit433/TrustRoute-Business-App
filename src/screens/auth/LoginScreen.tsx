@@ -9,14 +9,15 @@ import {
   KeyboardAvoidingView,
   Platform,
   Alert,
+  StatusBar,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useTheme, useThemedStyles, Spacing, BorderRadius } from '../../theme';
 import type { ColorScheme } from '../../theme/palettes';
+import { TrustRouteBrand } from '../../components/TrustRouteBrand';
 import { useAuthStore } from '../../store/auth.store';
 import { getUserFacingError } from '../../utils/errors';
-import { BUSINESS_API_URL } from '../../api/client';
 
 export const LoginScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -39,16 +40,18 @@ export const LoginScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor={colors.background} />
       <KeyboardAvoidingView
         style={styles.inner}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       >
         <View style={styles.brand}>
-          <View style={styles.logo}>
-            <MaterialCommunityIcons name="qrcode-scan" size={32} color={colors.white} />
-          </View>
-          <Text style={styles.brandTitle}>TrustRoute Scan</Text>
-          <Text style={styles.brandSub}>Counter app for business subscriptions</Text>
+          <TrustRouteBrand
+            size="lg"
+            stacked
+            productSuffix="Scan"
+            subtitle="Counter app for business subscriptions"
+          />
         </View>
 
         <View style={styles.card}>
@@ -89,8 +92,6 @@ export const LoginScreen: React.FC = () => {
             )}
           </TouchableOpacity>
         </View>
-
-        <Text style={styles.footer}>API: {BUSINESS_API_URL}</Text>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -101,17 +102,6 @@ const createStyles = (c: ColorScheme) =>
     container: { flex: 1, backgroundColor: c.background },
     inner: { flex: 1, padding: Spacing.xl, justifyContent: 'center' },
     brand: { alignItems: 'center', marginBottom: Spacing['2xl'] },
-    logo: {
-      width: 64,
-      height: 64,
-      borderRadius: BorderRadius.lg,
-      backgroundColor: c.primary,
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: Spacing.base,
-    },
-    brandTitle: { fontSize: 26, fontWeight: '800', color: c.textPrimary },
-    brandSub: { fontSize: 14, color: c.textSecondary, marginTop: Spacing.xs, textAlign: 'center' },
     card: {
       backgroundColor: c.surface,
       borderRadius: BorderRadius.xl,
@@ -147,5 +137,4 @@ const createStyles = (c: ColorScheme) =>
     },
     btnDisabled: { opacity: 0.5 },
     btnText: { color: c.white, fontSize: 16, fontWeight: '800' },
-    footer: { marginTop: Spacing.xl, fontSize: 11, color: c.textMuted, textAlign: 'center' },
   });

@@ -1,7 +1,7 @@
 import React, { createContext, useMemo } from 'react';
-import { StyleSheet, useColorScheme } from 'react-native';
+import { StyleSheet } from 'react-native';
 import type { Theme as NavTheme } from '@react-navigation/native';
-import { paletteForMode, type ColorScheme } from './palettes';
+import { lightPalette, type ColorScheme } from './palettes';
 
 export type ThemeContextValue = {
   colors: ColorScheme;
@@ -11,14 +11,14 @@ export type ThemeContextValue = {
 
 export const ThemeContext = createContext<ThemeContextValue | null>(null);
 
+/** Business Scan uses the TrustRoute light palette only (matches consumer app welcome). */
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const system = useColorScheme();
-  const resolvedMode: 'light' | 'dark' = system === 'light' ? 'light' : 'dark';
-  const colors = useMemo(() => paletteForMode(resolvedMode), [resolvedMode]);
+  const resolvedMode: 'light' | 'dark' = 'light';
+  const colors = useMemo(() => lightPalette, []);
 
   const navigationTheme = useMemo<NavTheme>(
     () => ({
-      dark: resolvedMode === 'dark',
+      dark: false,
       colors: {
         primary: colors.primary,
         background: colors.background,
@@ -28,7 +28,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         notification: colors.primary,
       },
     }),
-    [colors, resolvedMode],
+    [colors],
   );
 
   const value = useMemo(

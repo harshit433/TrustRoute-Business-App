@@ -7,6 +7,7 @@ import {
   ScrollView,
   RefreshControl,
   Alert,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -24,6 +25,8 @@ import { businessApi } from '../../api/business.api';
 import { updateScanHistoryStatus } from '../../services/scanHistory';
 import type { RootStackParamList } from '../../navigation/types';
 import { getUserFacingError } from '../../utils/errors';
+
+const LOGO = require('../../../Assets/trustroute-logo.png');
 
 export const HomeScreen: React.FC = () => {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -104,10 +107,16 @@ export const HomeScreen: React.FC = () => {
       >
         <TouchableOpacity style={styles.scanHero} onPress={onScan} activeOpacity={0.85}>
           <View style={styles.scanIconWrap}>
-            <MaterialCommunityIcons name="qrcode-scan" size={48} color={colors.white} />
+            <Image source={LOGO} style={styles.scanLogo} resizeMode="contain" />
           </View>
           <Text style={styles.scanTitle}>Scan customer QR</Text>
-          <Text style={styles.scanSub}>Point at the TrustRoute app on their phone</Text>
+          <Text style={styles.scanSub}>
+            Point at{' '}
+            <Text style={styles.scanSubBrand}>
+              Trust<Text style={styles.scanSubRoute}>Route</Text>
+            </Text>{' '}
+            on their phone
+          </Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.channelCard} onPress={() => navigation.navigate('ChannelSelector')}>
@@ -167,13 +176,16 @@ const createStyles = (c: ColorScheme) =>
       width: 88,
       height: 88,
       borderRadius: 44,
-      backgroundColor: 'rgba(255,255,255,0.2)',
+      backgroundColor: 'rgba(255,255,255,0.22)',
       alignItems: 'center',
       justifyContent: 'center',
       marginBottom: Spacing.base,
     },
+    scanLogo: { width: 52, height: 52 },
     scanTitle: { fontSize: 22, fontWeight: '800', color: c.white },
-    scanSub: { fontSize: 14, color: 'rgba(255,255,255,0.85)', marginTop: Spacing.xs, textAlign: 'center' },
+    scanSub: { fontSize: 14, color: 'rgba(255,255,255,0.9)', marginTop: Spacing.xs, textAlign: 'center' },
+    scanSubBrand: { fontWeight: '800', color: c.white },
+    scanSubRoute: { color: '#DCFCE7' },
     channelCard: {
       backgroundColor: c.surface,
       borderRadius: BorderRadius.lg,
